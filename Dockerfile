@@ -3,17 +3,14 @@ FROM alpine:latest
 LABEL author="Your Name/Org" \
       description="A robust wrapper to execute my CLI tool and upload results."
 
-# Copy entrypoint
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Install dependencies, download Privateer, install binary, and clean up
+RUN apk add --no-cache curl ca-certificates && \
+    update-ca-certificates && \
+    curl -L -o /tmp/privateer.tar.gz "https://github.com/privateerproj/privateer/releases/download/v0.8.0/privateer_Linux_x86_64.tar.gz" && \
+    mkdir -p /opt/privateer && \
+    tar -xzf /tmp/privateer.tar.gz -C /opt/privateer && \
+    mv /opt/privateer/privateer /usr/local/bin/privateer && \
+    chmod +x /usr/local/bin/privateer && \
+    rm -rf /tmp/privateer.tar.gz /opt/privateer
 
-# Install your CLI tool and dependencies here
-# Example placeholders:
-# RUN apk add --no-cache curl bash jq
-# RUN wget -O /usr/local/bin/my-cli https://example.com/my-cli && chmod +x /usr/local/bin/my-cli
-# Or, for Python-based tools:
-# RUN apk add --no-cache python3 py3-pip && pip install --no-cache-dir my-cli
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-
+ENTRYPOINT ["privateer", "-h"]
