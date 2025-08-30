@@ -25,6 +25,6 @@ RUN curl -L -o pvtr-github-repo.tar.gz "https://github.com/revanite-io/pvtr-gith
 
 FROM scratch
 COPY --from=build /build/privateer /bin/privateer
-COPY --from=build /build/pvtr-github-repo ~/privateer/bin/pvtr-github-repo
+COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/pvtr-github-repo
 
-ENTRYPOINT ["/bin/privateer", "list"]
+ENTRYPOINT ["/bin/privateer", "list", "-b", "/bin/pvtr-plugins"]
