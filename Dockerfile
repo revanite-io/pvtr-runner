@@ -1,16 +1,24 @@
-FROM alpine:latest
+# syntax=docker/dockerfile:1
+FROM alpine:latest AS build
 
-LABEL author="Your Name/Org" \
-      description="A robust wrapper to execute my CLI tool and upload results."
+WORKDIR /build
 
-# Install dependencies, download Privateer, install binary, and clean up
-RUN apk add --no-cache curl ca-certificates && \
-    update-ca-certificates && \
-    curl -L -o /tmp/privateer.tar.gz "https://github.com/privateerproj/privateer/releases/download/v0.8.0/privateer_Linux_x86_64.tar.gz" && \
-    mkdir -p /opt/privateer && \
-    tar -xzf /tmp/privateer.tar.gz -C /opt/privateer && \
-    mv /opt/privateer/privateer /usr/local/bin/privateer && \
-    chmod +x /usr/local/bin/privateer && \
-    rm -rf /tmp/privateer.tar.gz /opt/privateer
+LABEL author="revanite.io" \
+      description=""
 
-ENTRYPOINT ["privateer", "-h"]
+ARG DEFAULT_PVTR_VERSION=0.8.0
+ENV PVTR_VERSION=${DEFAULT_PVTR_VERSION}
+
+ARG DEFAULT_GITHUB_PLUGIN_VERSION
+ENV GITHUB_PLUGIN_VERSION=${DEFAULT_GITHUB_PLUGIN_VERSION}
+
+RUN apk add --no-cache curl ca-certificates tar gzip
+RUN update-ca-certificates
+RUN curl -L -o privateer.tar.gz "https://github.com/privateerproj/privateer/releases/download/v${PVTR_VERSION}/privateer_Linux_x86_64.tar.gz"
+RUN tar -xzf privateer.tar.gz
+RUN chmod +x privateer
+
+FROM scratch
+COPY --from=build /build/privateer /bin/privateer
+
+ENTRYPOINT ["/bin/privateer", "-h"]
