@@ -6,10 +6,6 @@ branding:
   color: "gray-dark"
 
 inputs:
-  GH_TOKEN:
-    description: "GitHub Token to authorize investigative API calls on your behalf"
-    required: true
-    default: ""
   REPO_OWNER:
     description: "Owner of the repo to scan, if not the same as the present repo's owner"
     required: false
@@ -23,7 +19,6 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.GH_TOKEN }}
     - ${{ inputs.REPO_OWNER }}
     - ${{ inputs.REPO_NAME }}
 
