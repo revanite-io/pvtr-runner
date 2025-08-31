@@ -7,7 +7,7 @@ vars:
 
 services:
 
-  flux2: # unique name/id for the evaluation
+  repo: # unique name/id for the evaluation
     plugin: github-repo # required while running via Privateer
     policy:
       catalogs:
@@ -17,5 +17,5 @@ services:
         - Maturity Level 2
         - Maturity Level 3
     vars:
-      owner: fluxcd
-      repo: flux2
+      owner: "{{ REPO_OWNER }}"
+      repo: "{{ REPO_NAME }}"

@@ -18,12 +18,19 @@ RUN curl -L -o pvtr-github-repo.tar.gz "https://github.com/revanite-io/pvtr-gith
     tar -xzf pvtr-github-repo.tar.gz && \
     chmod +x pvtr-github-repo
 
-FROM scratch
+FROM alpine:latest
+
+# Install basic utilities for the entrypoint script
+RUN apk add --no-cache ca-certificates
 
 COPY --from=build /build/privateer /bin/privateer
-COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/pvtr-github-repo
+COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/github-repo
 
 WORKDIR /pvtr-run
-COPY config-template.yml config-template.yml
+COPY config-template.yml config.yml
+COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/bin/privateer", "list", "-b", "/bin/pvtr-plugins"]
+# Make entrypoint script executable
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
