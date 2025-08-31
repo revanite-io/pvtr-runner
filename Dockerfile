@@ -26,10 +26,10 @@ RUN apk add --no-cache ca-certificates
 COPY --from=build /build/privateer /bin/privateer
 COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/github-repo
 
-COPY config-template.yml pvtr-config.yml
-COPY entrypoint.sh entrypoint.sh
+COPY config-template.yml /pvtr-config.yml
+COPY entrypoint.sh /entrypoint.sh
 
 # Make entrypoint script executable
-RUN chmod +x entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
