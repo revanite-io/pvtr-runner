@@ -5,7 +5,7 @@
 # Check that all required environment variables are provided
 missing_vars=false
 
-if [ -z "$ACTIONS_RUNTIME_TOKEN" ]; then
+if [ -z "$INPUT_GH_TOKEN" ]; then
     echo "Error: GH_TOKEN environment variable is required to make API calls, but not set"
     missing_vars=true
 fi
@@ -24,11 +24,11 @@ if [ "$missing_vars" = true ]; then
     exit 1
 fi
 
-echo "INPUT_GH_TOKEN: $ACTIONS_RUNTIME_TOKEN"
+echo "INPUT_GH_TOKEN: $INPUT_GH_TOKEN"
 echo "GITHUB_REPOSITORY_OWNER: $INPUT_REPO_OWNER"
 echo "GITHUB_PATH: $INPUT_REPO_NAME"
 
-sed "s/{{ INPUT_GH_TOKEN }}/$ACTIONS_RUNTIME_TOKEN/g" /pvtr-config.yml
+sed "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" /pvtr-config.yml
 sed "s/{{ GITHUB_REPOSITORY_OWNER }}/$INPUT_REPO_OWNER/g" /pvtr-config.yml
 sed "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
 
