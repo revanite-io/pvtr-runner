@@ -24,13 +24,9 @@ if [ "$missing_vars" = true ]; then
     exit 1
 fi
 
-# Extract repo name from GITHUB_REPOSITORY (format: owner/repo)
-REPO_NAME=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
-
-# Update config.yml with provided environment variables
-sed -i "s/{{ gh_token }}/$INPUT_GH_TOKEN/g" config.yml
-sed -i "s/{{ REPO_OWNER }}/$GITHUB_REPOSITORY_OWNER/g" config.yml
-sed -i "s/{{ REPO_NAME }}/$REPO_NAME/g" config.yml
+sed -i "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" config.yml
+sed -i "s/{{ GITHUB_REPOSITORY_OWNER }}/$GITHUB_REPOSITORY_OWNER/g" config.yml
+sed -i "s/{{ GITHUB_REPOSITORY }}/$GITHUB_REPOSITORY/g" config.yml
 
 # Execute the main privateer command with all provided arguments
-exec /bin/privateer run -b /bin/pvtr-plugins
+exec /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml

@@ -23,8 +23,8 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.pvtr_version }}
-    - ${{ inputs.plugin_version }}
-    - ${{ inputs.github_token }}
+    - ${{ inputs.GH_TOKEN }}
+    - ${{ inputs.REPO_OWNER }}
+    - ${{ inputs.REPO_NAME }}
 
 
