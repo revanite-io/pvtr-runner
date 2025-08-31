@@ -3,7 +3,7 @@ write: false # Change to false if you don't want to write the results to disk
 output: yaml # Change to json if you want CLI and written output in json format
 
 vars:
-  token: "{{ gh_token }}"
+  token: "{{ INPUT_GH_TOKEN }}"
 
 services:
 
@@ -17,5 +17,5 @@ services:
         - Maturity Level 2
         - Maturity Level 3
     vars:
-      owner: "{{ REPO_OWNER }}"
-      repo: "{{ REPO_NAME }}"
+      owner: "{{ GITHUB_REPOSITORY_OWNER }}"
+      repo: "{{ GITHUB_REPOSITORY }}"
