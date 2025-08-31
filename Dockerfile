@@ -28,9 +28,9 @@ COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/github-repo
 
 WORKDIR /pvtr-run
 COPY config-template.yml config.yml
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh entrypoint.sh
 
 # Make entrypoint script executable
-RUN chmod +x /entrypoint.sh
+RUN chmod +x entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
