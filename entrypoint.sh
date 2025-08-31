@@ -5,7 +5,7 @@
 # Check that all required environment variables are provided
 missing_vars=false
 
-if [ -z "$INPUT_GH_TOKEN" ]; then
+if [ -z "$ACTIONS_RUNTIME_TOKEN" ]; then
     echo "Error: GH_TOKEN environment variable is required to make API calls, but not set"
     missing_vars=true
 fi
@@ -24,13 +24,13 @@ if [ "$missing_vars" = true ]; then
     exit 1
 fi
 
-echo "INPUT_GH_TOKEN: $INPUT_GH_TOKEN"
+echo "INPUT_GH_TOKEN: $ACTIONS_RUNTIME_TOKEN"
 echo "GITHUB_REPOSITORY_OWNER: $GITHUB_REPOSITORY_OWNER"
-echo "GITHUB_PATH: $GITHUB_PATH"
+echo "GITHUB_PATH: $GITHUB_REPOSITORY"
 
-sed "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" /pvtr-config.yml
+sed "s/{{ INPUT_GH_TOKEN }}/$ACTIONS_RUNTIME_TOKEN/g" /pvtr-config.yml
 sed "s/{{ GITHUB_REPOSITORY_OWNER }}/$GITHUB_REPOSITORY_OWNER/g" /pvtr-config.yml
-sed "s/{{ GITHUB_REPOSITORY }}/$GITHUB_PATH/g" /pvtr-config.yml
+sed "s/{{ GITHUB_REPOSITORY }}/$GITHUB_REPOSITORY/g" /pvtr-config.yml
 
 # Execute the main privateer command with all provided arguments
 exec /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
