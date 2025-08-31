@@ -6,7 +6,7 @@ branding:
   color: "gray-dark"
 
 inputs:
-  github_token:
+  GH_TOKEN:
     description: "GitHub Token to authorize investigative API calls on your behalf"
     required: true
     default: ""
