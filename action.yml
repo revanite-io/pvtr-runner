@@ -1,4 +1,4 @@
-name: "Security Baseline Scan for GitHub Repos"
+name: "Security Baseline Scanner"
 description: "Easily scan a GitHub repository's against the Open Source Project Security Baseline"
 author: "Revanite"
 branding:
@@ -10,6 +10,15 @@ inputs:
     description: "GitHub Token to authorize investigative API calls on your behalf"
     required: true
     default: ""
+  REPO_OWNER:
+    description: "Owner of the repo to scan, if not the same as the present repo's owner"
+    required: false
+    default: ""
+  REPO_NAME:
+    description: "Name of the repo to scan, if not the present repo"
+    required: false
+    default: ""
+
 runs:
   using: "docker"
   image: "Dockerfile"
