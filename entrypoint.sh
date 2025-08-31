@@ -24,9 +24,9 @@ if [ "$missing_vars" = true ]; then
     exit 1
 fi
 
-sed -i "s/{{ INPUT_GH_TOKEN }}/$ACTIONS_RUNTIME_TOKEN/g" /pvtr-config.yml
-sed -i "s/{{ GITHUB_REPOSITORY_OWNER }}/$GITHUB_REPOSITORY_OWNER/g" /pvtr-config.yml
-sed -i "s/{{ GITHUB_REPOSITORY }}/$GITHUB_PATH/g" /pvtr-config.yml
+sed "s/{{ INPUT_GH_TOKEN }}/$ACTIONS_RUNTIME_TOKEN/g" /pvtr-config.yml
+sed "s/{{ GITHUB_REPOSITORY_OWNER }}/$GITHUB_REPOSITORY_OWNER/g" /pvtr-config.yml
+sed "s/{{ GITHUB_REPOSITORY }}/$GITHUB_PATH/g" /pvtr-config.yml
 
 # Execute the main privateer command with all provided arguments
 exec /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
