@@ -28,9 +28,9 @@ echo "INPUT_GH_TOKEN: $INPUT_GH_TOKEN"
 echo "GITHUB_REPOSITORY_OWNER: $INPUT_REPO_OWNER"
 echo "GITHUB_PATH: $INPUT_REPO_NAME"
 
-sed "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" /pvtr-config.yml
-sed "s/{{ GITHUB_REPOSITORY_OWNER }}/$INPUT_REPO_OWNER/g" /pvtr-config.yml
-sed "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
+sed -i "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" /pvtr-config.yml
+sed -i "s/{{ GITHUB_REPOSITORY_OWNER }}/$INPUT_REPO_OWNER/g" /pvtr-config.yml
+sed -i "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
 
 # Execute the main privateer command with all provided arguments
 exec /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
