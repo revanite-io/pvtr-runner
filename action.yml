@@ -1,24 +1,21 @@
-name: "My CLI Action"
-description: "A robust wrapper to execute my CLI tool and upload results."
-author: "Your Name/Org"
+name: "Security Baseline Scan for GitHub Repos"
+description: "Easily scan a GitHub repository's against the Open Source Project Security Baseline"
+author: "Revanite"
 branding:
-  icon: "terminal"
-  color: "blue"
+  icon: "search"
+  color: "gray-dark"
 
 inputs:
-  cli-arguments:
-    description: "Arguments to pass to the CLI tool."
-    required: false
+  github_token:
+    description: "GitHub Token to authorize investigative API calls on your behalf"
+    required: true
     default: ""
-
-outputs:
-  cli-output-path:
-    description: "Path to the directory containing generated artifacts."
-
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.cli-arguments }}
+    - ${{ inputs.pvtr_version }}
+    - ${{ inputs.plugin_version }}
+    - ${{ inputs.github_token }}
 
 

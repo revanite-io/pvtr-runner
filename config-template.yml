@@ -1,0 +1,21 @@
+loglevel: info
+write: false # Change to false if you don't want to write the results to disk
+output: yaml # Change to json if you want CLI and written output in json format
+
+vars:
+  token: "{{ gh_token }}"
+
+services:
+
+  flux2: # unique name/id for the evaluation
+    plugin: github-repo # required while running via Privateer
+    policy:
+      catalogs:
+        - OSPS_B # currently this is the only available catalog to assess against
+      applicability:
+        - Maturity Level 1
+        - Maturity Level 2
+        - Maturity Level 3
+    vars:
+      owner: fluxcd
+      repo: flux2
