@@ -32,6 +32,8 @@ sed -i "s/{{ INPUT_GH_TOKEN }}/$INPUT_GH_TOKEN/g" /pvtr-config.yml
 sed -i "s/{{ GITHUB_REPOSITORY_OWNER }}/$INPUT_REPO_OWNER/g" /pvtr-config.yml
 sed -i "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
 
+/bin/privateer list -c /pvtr-config.yml
+
 # Execute the main privateer command with all provided arguments
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
