@@ -4,6 +4,8 @@
 
 # Check that all required environment variables are provided
 missing_vars=false
+RESULTS_SRC_DIR="/evaluation_results"
+RESULTS_DEST_DIR="$GITHUB_WORKSPACE/evaluation_results"
 
 if [ -z "$INPUT_GH_TOKEN" ]; then
     echo "Error: GH_TOKEN environment variable is required to make API calls, but not set"
@@ -37,12 +39,10 @@ cat /pvtr-config.yml
 /bin/privateer list -c /pvtr-config.yml -b /bin/pvtr-plugins
 
 # Execute the main privateer command with all provided arguments
-/bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
+/bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml -o $RESULTS_DEST_DIR
 status=$?
 
 # After run, export evaluation results to the GitHub workspace if present
-RESULTS_SRC_DIR="/evaluation_results"
-RESULTS_DEST_DIR="$GITHUB_WORKSPACE/evaluation_results"
 
 if [ -d "$RESULTS_SRC_DIR" ]; then
     mkdir -p "$RESULTS_DEST_DIR"
