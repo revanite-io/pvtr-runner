@@ -4,7 +4,7 @@
 
 # Check that all required environment variables are provided
 missing_vars=false
-RESULTS_SRC_DIR="/evaluation_results"
+RESULTS_SRC_DIR="evaluation_results"
 RESULTS_DEST_DIR="$GITHUB_WORKSPACE/evaluation_results"
 
 if [ -z "$INPUT_GH_TOKEN" ]; then
@@ -39,7 +39,7 @@ cat /pvtr-config.yml
 /bin/privateer list -c /pvtr-config.yml -b /bin/pvtr-plugins
 
 # Execute the main privateer command with all provided arguments
-/bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml -o $RESULTS_DEST_DIR
+/bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
 
 # After run, export evaluation results to the GitHub workspace if present
