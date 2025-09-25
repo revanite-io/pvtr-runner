@@ -34,7 +34,7 @@ sed -i "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
 
 cat /pvtr-config.yml
 
-/bin/privateer list -c /pvtr-config.yml
+/bin/privateer list -c /pvtr-config.yml -b /bin/pvtr-plugins
 
 # Execute the main privateer command with all provided arguments
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
