@@ -33,4 +33,22 @@ sed -i "s/{{ GITHUB_REPOSITORY_OWNER }}/$INPUT_REPO_OWNER/g" /pvtr-config.yml
 sed -i "s/{{ GITHUB_REPOSITORY }}/$INPUT_REPO_NAME/g" /pvtr-config.yml
 
 # Execute the main privateer command with all provided arguments
-exec /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
+/bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
+status=$?
+
+# After run, export evaluation results to the GitHub workspace if present
+RESULTS_SRC_DIR="/evaluation_results"
+RESULTS_DEST_DIR="$GITHUB_WORKSPACE/evaluation_results"
+
+if [ -d "$RESULTS_SRC_DIR" ]; then
+    mkdir -p "$RESULTS_DEST_DIR"
+    cp -r "$RESULTS_SRC_DIR/"* "$RESULTS_DEST_DIR" 2>/dev/null || true
+    if [ -n "$GITHUB_OUTPUT" ]; then
+        echo "results_dir=$RESULTS_DEST_DIR" >> "$GITHUB_OUTPUT"
+    fi
+    echo "Exported evaluation results to: $RESULTS_DEST_DIR"
+else
+    echo "Something went wrong, no evaluation results were found"
+fi
+
+exit $status

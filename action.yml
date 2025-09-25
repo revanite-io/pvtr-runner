@@ -27,4 +27,6 @@ runs:
     - ${{ inputs.REPO_OWNER }}
     - ${{ inputs.REPO_NAME }}
 
-
+outputs:
+  results_dir:
+    description: "Path in the workspace where evaluation results were copied"
