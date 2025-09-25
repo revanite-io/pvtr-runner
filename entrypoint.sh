@@ -42,6 +42,8 @@ cat /pvtr-config.yml
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
 
+ls -la
+
 # After run, export evaluation results to the GitHub workspace if present
 
 if [ -d "$RESULTS_SRC_DIR" ]; then
