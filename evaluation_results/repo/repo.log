@@ -1,0 +1,4 @@
+2025-09-25T15:42:19.657Z [TRACE] Creating a new config instance for service: serviceName=repo loglevel=trace write=true write-directory=evaluation_results invasive=false applicability=["Maturity Level 1", "Maturity Level 2", "Maturity Level 3"] control-catalogs=["OSPS_B"] vars="map[owner:eddie-knight repo:pvtr-action token:ghp_xxx]" output=yaml
+2025-09-25T15:42:20.146Z [ERROR] Error querying GitHub GraphQL API: non-200 OK status code: 401 Unauthorized body: "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://docs.github.com/graphql\",\"status\":\"401\"}"
+2025-09-25T15:42:20.149Z [INFO]  2025/09/25 15:42:20 [DEBUG] plugin: plugin server: accept unix /tmp/plugin2974035925: use of closed network connection
+2025-09-25T15:42:20.149Z [INFO]  2025/09/25 15:42:20 Successfully completed plugin: github-repo

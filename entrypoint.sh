@@ -42,7 +42,7 @@ cat /pvtr-config.yml
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
 
-ls -la
+ls -la $RESULTS_SRC_DIR
 
 # After run, export evaluation results to the GitHub workspace if present
 
@@ -50,7 +50,7 @@ if [ -d "$RESULTS_SRC_DIR" ]; then
     mkdir -p "$RESULTS_DEST_DIR"
     cp -r "$RESULTS_SRC_DIR/"* "$RESULTS_DEST_DIR" 2>/dev/null || true
     if [ -n "$GITHUB_OUTPUT" ]; then
-        echo "results_dir=$RESULTS_DEST_DIR" >> "$GITHUB_OUTPUT"
+        echo "results_dir=$RESULTS_SRC_DIR" >> "$GITHUB_OUTPUT"
     fi
     echo "Exported evaluation results to: $RESULTS_DEST_DIR"
 else
