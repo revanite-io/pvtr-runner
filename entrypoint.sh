@@ -56,10 +56,19 @@ SARIF_PATH="$RESULTS_DEST_DIR/baseline-scanner.sarif"
 # Copy SARIF file to GitHub workspace
 if [ -f "$SARIF_PATH" ]; then
     # Copy to the GitHub workspace so the runner can access it
+    echo "Copying $SARIF_PATH to /github/workspace/"
     cp "$SARIF_PATH" "/github/workspace/"
     WORKSPACE_SARIF_PATH="/github/workspace/baseline-scanner.sarif"
-    echo "sarif_file=$WORKSPACE_SARIF_PATH" >> "$GITHUB_OUTPUT"
-    echo "SARIF file copied to: $WORKSPACE_SARIF_PATH"
+    
+    # Verify the copy worked
+    if [ -f "$WORKSPACE_SARIF_PATH" ]; then
+        echo "Copy successful! File exists at: $WORKSPACE_SARIF_PATH"
+        echo "sarif_file=$WORKSPACE_SARIF_PATH" >> "$GITHUB_OUTPUT"
+    else
+        echo "Copy failed! File not found at: $WORKSPACE_SARIF_PATH"
+        echo "Contents of /github/workspace/:"
+        ls -la /github/workspace/
+    fi
 else
     echo "SARIF file not found at: $SARIF_PATH"
     echo "evaluation_results:"
