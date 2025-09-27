@@ -49,7 +49,7 @@ SARIF_PATH="$RESULTS_SRC_DIR/baseline-scanner.sarif"
 
 # Copy SARIF file to GitHub workspace
 if [ -f "$SARIF_PATH" ]; then
-    echo "sarif_file="$SARIF_PATH"" >> "$GITHUB_OUTPUT"
+    echo "sarif_file=$SARIF_PATH" >> "$GITHUB_OUTPUT"
     echo "SARIF file copied to: $SARIF_PATH"
 else
     echo "SARIF file not found at: $SARIF_PATH"
