@@ -53,22 +53,11 @@ ls -la $RESULTS_DEST_DIR 2>/dev/null || echo "baseline-scanner directory not fou
 
 SARIF_PATH="$RESULTS_DEST_DIR/baseline-scanner.sarif"
 
-# Copy SARIF file to GitHub workspace
+# Output SARIF file path for GitHub Actions
 if [ -f "$SARIF_PATH" ]; then
-    # Copy to the GitHub workspace so the runner can access it
-    echo "Copying $SARIF_PATH to /github/workspace/"
-    cp "$SARIF_PATH" "/github/workspace/"
-    WORKSPACE_SARIF_PATH="/github/workspace/baseline-scanner.sarif"
-    
-    # Verify the copy worked
-    if [ -f "$WORKSPACE_SARIF_PATH" ]; then
-        echo "Copy successful! File exists at: $WORKSPACE_SARIF_PATH"
-        echo "sarif_file=$WORKSPACE_SARIF_PATH" >> "$GITHUB_OUTPUT"
-    else
-        echo "Copy failed! File not found at: $WORKSPACE_SARIF_PATH"
-        echo "Contents of /github/workspace/:"
-        ls -la /github/workspace/
-    fi
+    # Use relative path - the runner should be able to see files in the container's working directory
+    echo "sarif_file=$SARIF_PATH" >> "$GITHUB_OUTPUT"
+    echo "SARIF file available at: $SARIF_PATH"
 else
     echo "SARIF file not found at: $SARIF_PATH"
     echo "evaluation_results:"
