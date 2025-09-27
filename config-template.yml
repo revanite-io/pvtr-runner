@@ -6,7 +6,7 @@ vars:
 
 services:
 
-  repo
+  baseline-scanner:
     plugin: github-repo 
     policy:
       catalogs:
