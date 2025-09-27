@@ -43,6 +43,8 @@ cat /pvtr-config.yml
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
 
+ls -la $RESULTS_SRC_DIR
+
 SARIF_PATH="$RESULTS_SRC_DIR/baseline-scanner.sarif"
 
 # Copy SARIF file to GitHub workspace
