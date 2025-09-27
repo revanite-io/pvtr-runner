@@ -47,7 +47,7 @@ status=$?
 
 if [ -d "$RESULTS_SRC_DIR" ]; then
     mkdir -p "$RESULTS_DEST_DIR"
-    cp -r "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" "$RESULTS_DEST_DIR" 2>/dev/null || true
+    cp "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" "$RESULTS_DEST_DIR" 2>/dev/null || true
     if [ -n "$GITHUB_OUTPUT" ]; then
         echo "results_dir=$RESULTS_DEST_DIR" >> "$GITHUB_OUTPUT"
     fi
