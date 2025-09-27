@@ -28,5 +28,5 @@ runs:
     - ${{ inputs.REPO_NAME }}
 
 outputs:
-  results_dir:
-    description: "Path in the workspace where evaluation results were copied"
+  sarif_file:
+    description: "Path to the generated SARIF file"

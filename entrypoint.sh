@@ -5,7 +5,6 @@
 # Check that all required environment variables are provided
 missing_vars=false
 RESULTS_SRC_DIR="evaluation_results"
-RESULTS_DEST_DIR="$GITHUB_WORKSPACE/evaluation_results"
 
 if [ -z "$INPUT_GH_TOKEN" ]; then
     echo "Error: GH_TOKEN environment variable is required to make API calls, but not set"
@@ -43,27 +42,17 @@ cat /pvtr-config.yml
 status=$?
 
 
-# After run, export evaluation results to the GitHub workspace if present
-
-if [ -d "$RESULTS_SRC_DIR" ]; then
-    mkdir -p "$RESULTS_DEST_DIR"
-    # Copy the SARIF file specifically
-    if [ -f "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" ]; then
-        cp "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" "$RESULTS_DEST_DIR/"
-        echo "Copied SARIF file to: $RESULTS_DEST_DIR/baseline-scanner.sarif"
-    else
-        echo "SARIF file not found at: $RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif"
-        echo "Available files in evaluation_results:"
-        find "$RESULTS_SRC_DIR" -type f
-    fi
-    # Also copy the entire directory structure for debugging
-    cp -r "$RESULTS_SRC_DIR/"* "$RESULTS_DEST_DIR" 2>/dev/null || true
+# Output the SARIF file path for GitHub Actions
+if [ -f "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" ]; then
+    SARIF_PATH="$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif"
     if [ -n "$GITHUB_OUTPUT" ]; then
-        echo "results_dir=$RESULTS_DEST_DIR" >> "$GITHUB_OUTPUT"
+        echo "sarif_file=$SARIF_PATH" >> "$GITHUB_OUTPUT"
     fi
-    echo "Exported evaluation results to: $RESULTS_DEST_DIR"
+    echo "SARIF file generated: $SARIF_PATH"
 else
-    echo "Something went wrong, no evaluation results were found"
+    echo "SARIF file not found at: $RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif"
+    echo "Available files in evaluation_results:"
+    find "$RESULTS_SRC_DIR" -type f 2>/dev/null || echo "No evaluation results directory found"
 fi
 
 exit $status
