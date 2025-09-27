@@ -4,7 +4,9 @@
 
 # Check that all required environment variables are provided
 missing_vars=false
-RESULTS_SRC_DIR="evaluation_results/baseline-scanner"
+RESULTS_SRC_DIR="$GITHUB_WORKSPACE/evaluation_results/baseline-scanner"
+
+mkdir -p $RESULTS_SRC_DIR
 
 if [ -z "$INPUT_GH_TOKEN" ]; then
     echo "Error: GH_TOKEN environment variable is required to make API calls, but not set"
@@ -41,15 +43,14 @@ cat /pvtr-config.yml
 /bin/privateer run -b /bin/pvtr-plugins -c /pvtr-config.yml
 status=$?
 
+SARIF_PATH="$RESULTS_SRC_DIR/baseline-scanner.sarif"
 
 # Copy SARIF file to GitHub workspace
-if [ -f "$RESULTS_SRC_DIR/baseline-scanner.sarif" ]; then
-    SARIF_PATH="/github/workspace/baseline-scanner.sarif"
-    cp "$RESULTS_SRC_DIR/baseline-scanner.sarif" $SARIF_PATH
+if [ -f "$SARIF_PATH" ]; then
     echo "sarif_file="$SARIF_PATH"" >> "$GITHUB_OUTPUT"
     echo "SARIF file copied to: $SARIF_PATH"
 else
-    echo "SARIF file not found at: $RESULTS_SRC_DIR/baseline-scanner.sarif"
+    echo "SARIF file not found at: $SARIF_PATH"
     echo "evaluation_results:"
     find "$RESULTS_SRC_DIR" -type f 2>/dev/null || echo "No evaluation results directory found"
 fi
