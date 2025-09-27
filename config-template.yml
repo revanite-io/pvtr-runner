@@ -1,16 +1,16 @@
 loglevel: trace
-output: yaml # Change to json if you want CLI and written output in json format
+output: sarif
 
 vars:
   token: "{{ INPUT_GH_TOKEN }}"
 
 services:
 
-  repo: # unique name/id for the evaluation
-    plugin: github-repo # required while running via Privateer
+  repo
+    plugin: github-repo 
     policy:
       catalogs:
-        - OSPS_B # currently this is the only available catalog to assess against
+        - OSPS_B
       applicability:
         - Maturity Level 1
         - Maturity Level 2

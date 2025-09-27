@@ -6,8 +6,8 @@ WORKDIR /build
 LABEL author="revanite.io" \
       description=""
 
-ARG PVTR_VERSION=0.8.0
-ARG PLUGIN_VERSION=0.1.0
+ARG PVTR_VERSION=0.9.0
+ARG PLUGIN_VERSION=0.8.0
 
 RUN apk add --no-cache curl ca-certificates tar gzip && \
     update-ca-certificates && \
