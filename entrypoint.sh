@@ -47,7 +47,17 @@ status=$?
 
 if [ -d "$RESULTS_SRC_DIR" ]; then
     mkdir -p "$RESULTS_DEST_DIR"
-    cp "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" "$RESULTS_DEST_DIR" 2>/dev/null || true
+    # Copy the SARIF file specifically
+    if [ -f "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" ]; then
+        cp "$RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif" "$RESULTS_DEST_DIR/"
+        echo "Copied SARIF file to: $RESULTS_DEST_DIR/baseline-scanner.sarif"
+    else
+        echo "SARIF file not found at: $RESULTS_SRC_DIR/baseline-scanner/baseline-scanner.sarif"
+        echo "Available files in evaluation_results:"
+        find "$RESULTS_SRC_DIR" -type f
+    fi
+    # Also copy the entire directory structure for debugging
+    cp -r "$RESULTS_SRC_DIR/"* "$RESULTS_DEST_DIR" 2>/dev/null || true
     if [ -n "$GITHUB_OUTPUT" ]; then
         echo "results_dir=$RESULTS_DEST_DIR" >> "$GITHUB_OUTPUT"
     fi
