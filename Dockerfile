@@ -14,7 +14,7 @@ RUN apk add --no-cache curl ca-certificates tar gzip && \
     curl -L -o privateer.tar.gz "https://github.com/privateerproj/privateer/releases/download/v${PVTR_VERSION}/privateer_Linux_x86_64.tar.gz" && \
     tar -xzf privateer.tar.gz && \
     chmod +x privateer
-RUN curl -L -o pvtr-github-repo.tar.gz "https://github.com/revanite-io/pvtr-github-repo/releases/download/v${PLUGIN_VERSION}/pvtr-github-repo_{$PLUGIN_VERSION}_linux_386.tar.gz" && \
+RUN curl -L -o pvtr-github-repo.tar.gz "https://github.com/revanite-io/pvtr-github-repo/releases/download/v${PLUGIN_VERSION}/pvtr-github-repo_Linux_i386.tar.gz" && \
     tar -xzf pvtr-github-repo.tar.gz && \
     chmod +x pvtr-github-repo
 
