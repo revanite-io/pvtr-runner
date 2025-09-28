@@ -68,29 +68,11 @@ if [ -f "$SARIF_PATH" ]; then
     echo "Number of runs in SARIF: $RUNS_COUNT"
     
     if [ "$RUNS_COUNT" -eq 0 ]; then
-        echo "Warning: SARIF file has empty runs array. Creating minimal valid SARIF file..."
-        
-        # Create a valid SARIF with empty results but proper structure
-        FIXED_SARIF_PATH="${SARIF_PATH%.sarif}-fixed.sarif"
-        jq '.runs = [{
-            "tool": {
-                "driver": {
-                    "name": "OSPS Baseline Scanner",
-                    "version": "1.0.0",
-                    "informationUri": "https://github.com/revanite-io/pvtr-runner",
-                    "rules": []
-                }
-            },
-            "results": [],
-            "columnKind": "utf16CodeUnits"
-        }]' "$SARIF_PATH" > "$FIXED_SARIF_PATH"
-        
-        echo "Fixed SARIF file created: $FIXED_SARIF_PATH"
-        echo "sarif_file=$FIXED_SARIF_PATH" >> "$GITHUB_OUTPUT"
+        echo "Warning: SARIF file has empty runs array. This will likely tip over if used in CodeQL."
     else
         echo "SARIF file appears valid for GitHub CodeQL upload"
-        echo "sarif_file=$SARIF_PATH" >> "$GITHUB_OUTPUT"
     fi
+    echo "sarif_file=$SARIF_PATH" >> "$GITHUB_OUTPUT"
 else
     echo "SARIF file not found at: $SARIF_PATH"
     echo "evaluation_results:"
