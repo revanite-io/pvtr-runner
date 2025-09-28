@@ -21,7 +21,7 @@ RUN curl -L -o pvtr-github-repo.tar.gz "https://github.com/revanite-io/pvtr-gith
 FROM alpine:latest
 
 # Install basic utilities for the entrypoint script
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates jq
 
 COPY --from=build /build/privateer /bin/privateer
 COPY --from=build /build/pvtr-github-repo /bin/pvtr-plugins/github-repo
